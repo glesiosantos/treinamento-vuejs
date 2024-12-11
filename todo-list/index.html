@@ -21,22 +21,18 @@
                 <h3>Lista de Tarefas</h3>
                 
                 <div class="all-todos">
-                    <div class="single-todo done">
-                        <p>Aprender HTML, CSS e Javascript</p>
-                    </div>
-                    <div class="single-todo done">
-                        <p>Aprender o básico de Vue JS</p>
-                    </div>
-                    <div class="single-todo">
-                        <p>Completar o desafio de Vue JS com excelência</p>
+                    <div class="single-todo" :class="{done: task.done}" v-for="(task, index) in tasks" :key="index" @click="task.done = !task.done">
+                        <p>{{task.title}}</p> 
                     </div>
 
                 </div>
 
-                <button class="clear">Limpar tudo</button>
+                <button class="clear" @click="cleanTask()">Limpar tudo</button>
 
-                <input type="text" placeholder="Escreva uma nova tarefa...">
-                <button class="add">Adicionar</button>
+                <form @submit.prevent="addTask()">
+                    <input type="text" placeholder="Escreva uma nova tarefa..." v-model="task.title">
+                    <button class="add">Adicionar</button>
+                </form>
 
                 <div class="instructions">
                     Instruções:
@@ -49,7 +45,7 @@
             </section>
 
         </main>
-        <script src="https://unpkg.com/vue@next"></script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
         <script src="scripts.js"></script>
     </body>
 
