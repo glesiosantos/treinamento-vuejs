@@ -1,9 +1,7 @@
-var tasks = []
-
 const todosApp = {
     data() {
         return {
-            tasks: tasks,
+            tasks: [],
             task: {
                 done: false
             }
@@ -11,18 +9,28 @@ const todosApp = {
     },
     methods: {
         addTask: function() {
-            if(this.task.title) {
+            console.log(this.task)
+            if(this.task.title) { 
                 this.tasks.push(this.task)
-                this.task = {}
+                this.task = { done: false }
+                localStorage.setItem('tasks', JSON.stringify(this.tasks))
             } else {
-                alert('required title')
+                alert('Task title is required!')
             }
         },
 
         cleanTask: function() {
             this.tasks = []
-        }
+        },
     },
+    created() {
+        this.tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : this.todos
+    },
+
+    updated() {
+        localStorage.setItem('tasks', JSON.stringify(this.tasks))
+    },
+
 }
 
 Vue.createApp(todosApp).mount('#app')
